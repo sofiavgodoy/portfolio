@@ -1,0 +1,56 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+const { title, description = site.description, image = '/images/about/01.webp' } = Astro.props;
+const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.role}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#fcfaf8" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap"
+    />
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <dialog class="lightbox" id="lightbox" aria-label="Image preview">
+      <form method="dialog"><button aria-label="Close">×</button></form>
+      <img alt="" />
+    </dialog>
+    <script>
+      import { initMotion } from '../scripts/motion';
+      document.addEventListener('astro:page-load', initMotion);
+    </script>
+  </body>
+</html>

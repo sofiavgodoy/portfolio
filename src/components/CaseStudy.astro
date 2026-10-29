@@ -1,0 +1,72 @@
+---
+import Swatches from './Swatches.astro';
+import type { Discipline } from '../data/site';
+interface Props {
+  back: { href: string; label: string };
+  kicker: string;
+  title: string;
+  summary?: string;
+  list?: Discipline[];
+  meta: { label: string; value: string }[];
+  cover: string;
+  next?: { href: string; title: string; cover: string };
+}
+const { back, kicker, title, summary, list = [], meta, cover, next } = Astro.props;
+---
+<article class="cs">
+  <header class="cs__head wrap">
+    <a class="cs__back" href={back.href}>← {back.label}</a>
+    <p class="eyebrow" data-reveal>{kicker}</p>
+    <h1 data-reveal>{title}</h1>
+    {summary && <p class="cs__summary" data-reveal>{summary}</p>}
+    <dl class="cs__meta" data-reveal>
+      {meta.map((m) => (
+        <div><dt>{m.label}</dt><dd>{m.value}</dd></div>
+      ))}
+      {list.length > 0 && (
+        <div><dt>Mix</dt><dd><Swatches list={list} labels /></dd></div>
+      )}
+    </dl>
+  </header>
+  <div class="cs__cover wrap" data-reveal>
+    <img src={cover} alt="" />
+  </div>
+  <div class="prose wrap">
+    <slot />
+  </div>
+  {next && (
+    <aside class="cs__next wrap">
+      <p class="eyebrow">Next up</p>
+      <a href={next.href}>
+        <img src={next.cover} alt="" loading="lazy" />
+        <span>{next.title} →</span>
+      </a>
+    </aside>
+  )}
+</article>
+
+<style>
+  .cs__head { text-align: center; padding: clamp(40px, 7vw, 90px) 0 clamp(28px, 4vw, 44px); }
+  .cs__back { display: inline-block; font-size: 14px; color: var(--muted); text-decoration: none; margin-bottom: 28px; }
+  .cs__back:hover { color: var(--pink-ink); }
+  h1 { font-size: clamp(2.6rem, 7vw, 5rem); margin-top: 12px; }
+  .cs__summary { font-size: clamp(17px, 2vw, 20px); max-width: 40ch; margin: 18px auto 0; color: var(--ink); }
+  .cs__meta {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 18px 44px;
+    margin: 32px auto 0; text-align: left;
+  }
+  .cs__meta dt { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .cs__meta dd { margin: 6px 0 0; font-size: 15px; color: var(--navy); }
+  .cs__cover img {
+    width: 100%; max-height: 640px; object-fit: cover; border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .prose { padding-block: clamp(40px, 7vw, 80px) 20px; }
+  .cs__next { text-align: center; padding-top: 60px; }
+  .cs__next a {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 14px;
+    text-decoration: none; font-family: var(--serif); font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); color: var(--navy);
+  }
+  .cs__next img { width: min(360px, 80vw); aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius-sm); transition: transform 0.5s var(--ease); }
+  .cs__next a:hover img { transform: translateY(-4px) rotate(-1.5deg); }
+</style>

@@ -1,0 +1,183 @@
+---
+import Badge from './Badge.astro';
+import { site, onRepeat } from '../data/site';
+
+// Tilted "polaroid" cards that float around the name, linking into the work.
+const cards = [
+  { src: '/images/digital-art/cover.webp', href: '/playground/digital-art', alt: 'Strawberry sheep illustration', cls: 'c1' },
+  { src: '/images/games/cover.webp', href: '/playground/games', alt: 'Waddle Hero game title screen', cls: 'c2' },
+  { src: '/images/bloom/cover.webp', href: '/work/bloom', alt: 'Bloom website on a laptop', cls: 'c3' },
+  { src: '/images/social-media/cover.webp', href: '/work/gud-social', alt: 'GBM event graphic with Microsoft', cls: 'c4' },
+];
+---
+<section class="hero" data-paint>
+  <div class="paint" aria-hidden="true">
+    <span class="blob blob--pink"></span>
+    <span class="blob blob--blue"></span>
+    <span class="blob blob--lilac"></span>
+  </div>
+
+  <div class="cards" aria-hidden="true">
+    {cards.map((c) => (
+      <a href={c.href} class={`card ${c.cls}`} tabindex="-1">
+        <img src={c.src} alt={c.alt} loading="eager" />
+      </a>
+    ))}
+    <Badge class="hero__badge" size={170} />
+    <a class="vinyl" href={onRepeat.href} target="_blank" rel="noopener" tabindex="-1">
+      <span class="vinyl__disc"><span class="vinyl__label">SG</span></span>
+      <span class="vinyl__text"><small>On repeat</small>{onRepeat.title} · {onRepeat.artist}</span>
+    </a>
+  </div>
+
+  <div class="hero__content">
+    <Badge class="hero__badge--mobile" size={130} />
+    <svg class="arc" viewBox="0 0 300 60" aria-hidden="true">
+      <path id="arc" d="M20,52 Q150,8 280,52" fill="none" />
+      <text><textPath href="#arc" startOffset="50%" text-anchor="middle">Welcome to my world</textPath></text>
+    </svg>
+    <h1>{site.name}</h1>
+    <p class="hero__role">{site.role}</p>
+
+    <div class="mix" role="group" aria-label="What I do">
+      <a href="/work?filter=strategy" class="chip" data-pull="pink" style="--c: var(--pink)">
+        <span class="dot"></span>Strategy
+      </a>
+      <span class="mix__op" aria-hidden="true">+</span>
+      <a href="/work?filter=ux" class="chip" data-pull="blue" style="--c: var(--blue)">
+        <span class="dot"></span>Design
+      </a>
+      <span class="mix__result">
+        <span class="mix__op" aria-hidden="true">=</span>
+        <a href="/work" class="chip chip--mix" data-pull="lilac">
+          <span class="dot"></span>the full picture
+        </a>
+      </span>
+    </div>
+
+    <div class="hero__cta">
+      <a href="/work" class="btn btn--primary">
+        See my work
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
+      </a>
+      <a href="/about" class="btn btn--ghost">About me</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    --px: 0; --py: 0;
+    position: relative;
+    min-height: min(100svh - 60px, 920px);
+    display: grid; place-items: center;
+    padding: 40px var(--gutter) 80px;
+    isolation: isolate;
+    overflow: clip;
+  }
+
+  /* ---- Paint field ---- */
+  .paint {
+    position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent);
+    mask-image: linear-gradient(to bottom, #000 65%, transparent);
+  }
+  .blob {
+    position: absolute; width: 46vmax; aspect-ratio: 1; border-radius: 50%;
+    filter: blur(70px); opacity: 0.5; mix-blend-mode: multiply;
+    transition: opacity 0.8s var(--ease), scale 0.9s var(--ease);
+    translate: calc(var(--px) * var(--k) * 1px) calc(var(--py) * var(--k) * 1px);
+  }
+  .blob--pink { --k: 120; background: var(--pink); left: -6vmax; top: 4%; animation: drift-a 22s ease-in-out infinite alternate; }
+  .blob--blue { --k: -100; background: var(--blue); right: -8vmax; top: 18%; animation: drift-b 26s ease-in-out infinite alternate; }
+  .blob--lilac { --k: 70; background: var(--lilac); left: 32%; bottom: -24vmax; opacity: 0.4; animation: drift-c 30s ease-in-out infinite alternate; }
+  @keyframes drift-a { to { transform: translate(14vw, 10vh) scale(1.08); } }
+  @keyframes drift-b { to { transform: translate(-12vw, 12vh) scale(0.94); } }
+  @keyframes drift-c { to { transform: translate(-8vw, -14vh) scale(1.12); } }
+
+  /* Hovering a chip pulls its color forward, like dipping a brush */
+  .hero[data-focus] .blob { opacity: 0.22; }
+  .hero[data-focus='pink'] .blob--pink,
+  .hero[data-focus='blue'] .blob--blue { opacity: 0.75; scale: 1.25; }
+  .hero[data-focus='lilac'] .blob { opacity: 0.6; scale: 1.1; }
+
+  /* ---- Center ---- */
+  .hero__content { text-align: center; position: relative; z-index: 2; }
+  .arc { width: 230px; margin: 0 auto -6px; overflow: visible; }
+  .arc text { font-family: var(--sans); font-size: 17px; fill: var(--ink); }
+  h1 { font-size: clamp(3.2rem, 10vw, 7.4rem); line-height: 1; padding-inline: 0.05em; }
+  .hero__role { margin: 18px 0 0; font-size: clamp(16px, 2vw, 19px); color: var(--ink); }
+
+  .mix { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: 30px; }
+  .mix__op { color: var(--muted); font-size: 18px; }
+  .mix__result { display: inline-flex; align-items: center; gap: 10px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px 8px 12px; border-radius: 999px;
+    background: rgb(255 255 255 / 0.75); box-shadow: inset 0 0 0 1px var(--line);
+    font-size: 14px; font-weight: 500; color: var(--navy); text-decoration: none;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s;
+  }
+  .chip:hover, .chip:focus-visible { transform: translateY(-2px); box-shadow: inset 0 0 0 1px var(--c, var(--lilac)), 0 8px 20px -10px var(--c, var(--lilac)); }
+  .chip .dot { width: 14px; height: 14px; }
+  .chip--mix .dot { background: var(--mix); }
+
+  .hero__cta { display: flex; gap: 12px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+
+  /* ---- Floating cards ---- */
+  .cards { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+  .card, .vinyl, .cards :global(.hero__badge) { pointer-events: auto; position: absolute; }
+  .card {
+    width: clamp(150px, 15vw, 220px); border-radius: 14px; overflow: hidden;
+    background: #fff; padding: 6px;
+    box-shadow: 0 18px 40px -18px rgb(20 26 77 / 0.35);
+    rotate: var(--r);
+    translate: calc(var(--px) * var(--k) * 1px) calc(var(--py) * var(--k) * 1px);
+    animation: float 7s ease-in-out infinite alternate;
+    animation-delay: var(--d);
+    transition: rotate 0.5s var(--ease), scale 0.5s var(--ease);
+  }
+  .card img { border-radius: 9px; aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
+  .card:hover { rotate: 0deg; scale: 1.06; z-index: 3; }
+  .c1 { --r: -9deg; --k: -26; --d: -1s; left: 5%; top: 9%; }
+  .c2 { --r: 6deg; --k: -16; --d: -3s; left: 2%; top: 42%; }
+  .c3 { --r: 7deg; --k: 22; --d: -2s; right: 5%; top: 10%; }
+  .c4 { --r: -4deg; --k: 30; --d: -4s; right: 3%; top: 40%; }
+  .c4 img { object-position: top; }
+  @keyframes float { from { transform: translateY(-6px); } to { transform: translateY(8px); } }
+
+  .cards :global(.hero__badge) { left: 9%; bottom: 6%; }
+  .hero__content :global(.hero__badge--mobile) { display: none; margin: 0 auto 6px; }
+
+  .vinyl {
+    right: 7%; bottom: 9%;
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 16px 8px 8px; border-radius: 999px;
+    background: rgb(255 255 255 / 0.85); box-shadow: 0 14px 30px -16px rgb(20 26 77 / 0.35);
+    text-decoration: none; font-size: 13px; color: var(--navy);
+  }
+  .vinyl small { display: block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .vinyl__disc {
+    width: 44px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center;
+    background: repeating-radial-gradient(circle, #23233a 0 1px, #15152a 1px 3px);
+    animation: spin 6s linear infinite paused;
+  }
+  .vinyl:hover .vinyl__disc { animation-play-state: running; }
+  .vinyl__label {
+    width: 18px; aspect-ratio: 1; border-radius: 50%; background: var(--mix);
+    font-size: 6px; font-weight: 700; display: grid; place-items: center; color: #fff;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 1100px) {
+    .c2, .c4 { display: none; }
+    .c1 { top: 4%; } .c3 { top: 4%; }
+  }
+  @media (max-width: 860px) {
+    .cards { display: none; }
+    .hero__content :global(.hero__badge--mobile) { display: block; }
+    .hero { min-height: auto; padding-top: 48px; }
+    .blob { width: 60vmax; opacity: 0.35; filter: blur(50px); }
+    .blob--lilac { opacity: 0.25; }
+  }
+</style>

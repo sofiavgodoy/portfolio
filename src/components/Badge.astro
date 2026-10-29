@@ -1,0 +1,29 @@
+---
+// Headshot with text circling around it (carried over from the Framer site).
+import { site } from '../data/site';
+interface Props { size?: number; class?: string }
+const { size = 170, class: cls } = Astro.props;
+const id = `badge-${Math.random().toString(36).slice(2, 8)}`;
+---
+<div class:list={['badge', cls]} style={`--size:${size}px`}>
+  <img src="/images/about/01.webp" alt="Portrait of Sofia Godoy" width={size} height={size} />
+  <svg viewBox="0 0 200 200" aria-hidden="true">
+    <defs><path id={id} d="M100,100 m-84,0 a84,84 0 1,1 168,0 a84,84 0 1,1 -168,0" /></defs>
+    <text><textPath href={`#${id}`} textLength="524" lengthAdjust="spacing">{site.badge}</textPath></text>
+  </svg>
+</div>
+
+<style>
+  .badge { position: relative; width: var(--size); aspect-ratio: 1; flex: none; }
+  .badge img {
+    position: absolute; inset: 22%; width: 56%; height: 56%;
+    border-radius: 50%; object-fit: cover; object-position: 50% 20%;
+    box-shadow: 0 10px 30px -12px rgb(20 26 77 / 0.35);
+  }
+  .badge svg { position: absolute; inset: 0; animation: spin 26s linear infinite; }
+  .badge text {
+    font-family: var(--sans); font-size: 13.4px; font-weight: 500;
+    fill: var(--navy);
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>

@@ -1,0 +1,54 @@
+---
+const path = Astro.url.pathname;
+const is = (p: string) => (p === '/' ? path === '/' : path.startsWith(p));
+---
+<header class="nav">
+  <nav class="nav__inner" aria-label="Main">
+    <a href="/work" class:list={['nav__link', { active: is('/work') }]}>Work</a>
+    <a href="/about" class:list={['nav__link', { active: is('/about') }]}>About</a>
+    <a href="/" class="nav__name" aria-label="Sofia Godoy, home">Sofia Godoy</a>
+    <a href="/playground" class:list={['nav__link', { active: is('/playground') }]}>Playground</a>
+    <a href="#contact" class="nav__link">Contact</a>
+  </nav>
+</header>
+
+<style>
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    padding: 14px var(--gutter);
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  :global(html.scrolled) .nav { border-bottom-color: var(--line); }
+  .nav__inner {
+    display: flex; align-items: center; justify-content: center;
+    gap: clamp(14px, 3.5vw, 36px);
+  }
+  .nav__link {
+    font-size: 14px; color: var(--muted); text-decoration: none;
+    position: relative; padding: 4px 0;
+  }
+  .nav__link::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+    background: var(--mix); border-radius: 2px;
+    transform: scaleX(0); transition: transform 0.35s var(--ease);
+  }
+  .nav__link:hover, .nav__link.active { color: var(--navy); }
+  .nav__link:hover::after, .nav__link.active::after { transform: scaleX(1); }
+  .nav__name {
+    font-family: var(--serif); font-style: italic; font-size: 21px;
+    color: var(--pink-ink); text-decoration: none; white-space: nowrap;
+  }
+  @media (max-width: 560px) {
+    .nav__inner { gap: 14px; }
+    .nav__name { order: -1; font-size: 18px; margin-right: auto; }
+    .nav__inner { justify-content: flex-end; }
+    .nav__link { font-size: 13px; }
+  }
+  @media (max-width: 380px) {
+    .nav__link[href='#contact'] { display: none; }
+  }
+</style>

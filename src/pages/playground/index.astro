@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const play = (await getCollection('playground', (p) => !p.data.draft)).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Playground" description="Illustration, animation, games, and photography by Sofia Godoy.">
+  <section class="wrap page-head">
+    <p class="eyebrow" data-reveal>Playground</p>
+    <h1 data-reveal>Things I make for fun</h1>
+    <p data-reveal>Illustration, animation, games, and photography: the side of me that keeps the strategy human.</p>
+  </section>
+  <section class="wrap">
+    <ul class="board">
+      {play.map((p, i) => (
+        <li data-reveal style={`--delay:${(i % 3) * 0.06}s; --r:${[-1.6, 1.2, -0.6, 1.8][i % 4]}deg`}>
+          <a href={`/playground/${p.id}`}>
+            <img src={p.data.cover} alt="" loading="lazy" decoding="async" />
+            <span class="board__kind">{p.data.kind}</span>
+            <span class="board__title">{p.data.title}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .board { list-style: none; padding: 0 0 40px; margin: 0; columns: 3 280px; column-gap: 22px; }
+  .board li { break-inside: avoid; margin-bottom: 22px; }
+  .board a {
+    display: block; text-decoration: none; padding: 8px 8px 16px; border-radius: 16px;
+    background: #fff; box-shadow: 0 14px 34px -22px rgb(20 26 77 / 0.4);
+    rotate: var(--r); transition: rotate 0.5s var(--ease), transform 0.5s var(--ease);
+  }
+  .board a:hover { rotate: 0deg; transform: translateY(-4px); }
+  .board img { width: 100%; border-radius: 10px; background: var(--surface); }
+  .board__kind { display: block; margin: 14px 8px 0; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lilac-ink); }
+  .board__title { display: block; margin: 4px 8px 0; font-family: var(--serif); font-style: italic; font-size: 1.35rem; color: var(--navy); }
+</style>

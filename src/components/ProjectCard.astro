@@ -1,0 +1,52 @@
+---
+import Swatches from './Swatches.astro';
+import { disciplines, type Discipline } from '../data/site';
+interface Props {
+  href: string;
+  title: string;
+  kicker: string;
+  summary?: string;
+  cover: string;
+  list?: Discipline[];
+  delay?: number;
+}
+const { href, title, kicker, summary, cover, list = [], delay = 0 } = Astro.props;
+// The hover wash blends this project's discipline colors.
+const colors = list.map((d) => disciplines[d].color);
+const wash = colors.length > 1 ? `linear-gradient(135deg, ${colors.join(', ')})` : colors[0] ?? 'var(--mix)';
+---
+<article class="pcard" data-disciplines={list.join(' ')} data-reveal style={`--wash:${wash}; --delay:${delay}s`}>
+  <a href={href}>
+    <div class="pcard__media">
+      <img src={cover} alt="" loading="lazy" decoding="async" />
+    </div>
+    <div class="pcard__body">
+      <p class="pcard__kicker">{list.length > 0 && <Swatches list={list} />}<span>{kicker}</span></p>
+      <h3>{title}</h3>
+      {summary && <p class="pcard__summary">{summary}</p>}
+    </div>
+  </a>
+</article>
+
+<style>
+  .pcard a {
+    display: block; height: 100%; text-decoration: none; position: relative;
+    padding: 10px 10px 22px; border-radius: var(--radius);
+    background: var(--surface);
+    isolation: isolate; overflow: hidden;
+    transition: transform 0.5s var(--ease);
+  }
+  .pcard a::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background: var(--wash); opacity: 0; transition: opacity 0.5s var(--ease);
+  }
+  .pcard a:hover { transform: translateY(-4px); }
+  .pcard a:hover::before { opacity: 0.22; }
+  .pcard__media { border-radius: calc(var(--radius) - 8px); overflow: hidden; aspect-ratio: 4 / 3; background: var(--surface-2); }
+  .pcard__media img { width: 100%; height: 100%; object-fit: cover; transition: scale 0.8s var(--ease); }
+  .pcard a:hover img { scale: 1.04; }
+  .pcard__body { padding: 18px 10px 0; }
+  .pcard__kicker { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 13px; color: var(--muted); }
+  h3 { font-size: clamp(1.5rem, 2.6vw, 1.9rem); margin-top: 8px; }
+  .pcard__summary { margin: 10px 0 0; font-size: 15px; color: var(--ink); opacity: 0.85; }
+</style>

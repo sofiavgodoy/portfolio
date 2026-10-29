@@ -1,0 +1,52 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { disciplines, type Discipline } from '../data/site';
+import type { CollectionEntry } from 'astro:content';
+interface Props { items: CollectionEntry<'work'>[]; syncUrl?: boolean }
+const { items, syncUrl = false } = Astro.props;
+const keys = Object.keys(disciplines) as Discipline[];
+---
+<div class="wg" data-filter-root data-filter-url={syncUrl ? '' : undefined} data-active="all">
+  <div class="wg__filters" role="group" aria-label="Filter projects by discipline">
+    <button type="button" class="fchip" data-filter="all" aria-pressed="true" style="--c: var(--mix)">
+      <span class="dot"></span>All
+    </button>
+    {keys.map((k) => (
+      <button type="button" class="fchip" data-filter={k} aria-pressed="false" style={`--c:${disciplines[k].color}`}>
+        <span class="dot"></span>{disciplines[k].label}
+      </button>
+    ))}
+  </div>
+  <div class="wg__grid">
+    {items.map((p, i) => (
+      <ProjectCard
+        href={`/work/${p.id}`}
+        title={p.data.title}
+        kicker={p.data.kicker}
+        summary={p.data.summary}
+        cover={p.data.cover}
+        list={p.data.disciplines}
+        delay={(i % 2) * 0.08}
+      />
+    ))}
+  </div>
+  <p class="wg__empty" data-empty hidden>Nothing in this color yet — more coming soon.</p>
+</div>
+
+<style>
+  .wg__filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: clamp(28px, 5vw, 44px); }
+  .fchip {
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    padding: 9px 16px 9px 11px; border-radius: 999px; border: 0;
+    background: #fff; box-shadow: inset 0 0 0 1px var(--line);
+    font-size: 14px; font-weight: 500; color: var(--muted);
+    transition: box-shadow 0.3s, color 0.3s, transform 0.3s var(--ease);
+  }
+  .fchip .dot { width: 14px; height: 14px; transition: scale 0.4s var(--ease); }
+  .fchip:hover { color: var(--navy); transform: translateY(-1px); }
+  .fchip[aria-pressed='true'] { color: var(--navy); box-shadow: inset 0 0 0 1.5px var(--navy); }
+  .fchip[aria-pressed='true'] .dot { scale: 1.2; }
+  .wg__grid { display: grid; gap: clamp(16px, 2.4vw, 28px); grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
+  .wg__grid > :global([hidden]) { display: none; }
+  .wg__empty { text-align: center; color: var(--muted); }
+</style>

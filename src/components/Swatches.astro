@@ -1,0 +1,25 @@
+---
+import { disciplines, type Discipline } from '../data/site';
+interface Props { list: Discipline[]; labels?: boolean }
+const { list, labels = false } = Astro.props;
+---
+<span class:list={['swatches', { 'swatches--labels': labels }]}>
+  {list.map((d) => (
+    <span class="sw" style={`--c:${disciplines[d].color}`}>
+      <span class="dot"></span>
+      {labels ? disciplines[d].label : <span class="sr-only">{disciplines[d].label}</span>}
+    </span>
+  ))}
+</span>
+
+<style>
+  .swatches { display: inline-flex; align-items: center; }
+  .swatches:not(.swatches--labels) .sw + .sw { margin-left: -3px; }
+  .swatches:not(.swatches--labels) .dot { box-shadow: 0 0 0 2px var(--bg); }
+  .swatches--labels { flex-wrap: wrap; gap: 8px; }
+  .swatches--labels .sw {
+    display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500;
+    padding: 6px 12px 6px 9px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--navy);
+  }
+</style>
