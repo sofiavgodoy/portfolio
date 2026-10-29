@@ -1,0 +1,52 @@
+---
+import { skills, disciplines } from '../data/site';
+// Pill positions around the heading on wide screens (x%, y%)
+const spots = [
+  [8, 8], [70, 4], [86, 26], [2, 36], [90, 52], [6, 66], [76, 80],
+  [24, 88], [52, 94], [36, 2], [60, 18], [18, 20], [84, 92],
+];
+---
+<section class="skills section">
+  <div class="skills__stage wrap">
+    <ul class="skills__pills">
+      {skills.map((s, i) => (
+        <li style={`--c:${disciplines[s.d].color}; --x:${spots[i % spots.length][0]}%; --y:${spots[i % spots.length][1]}%; --d:${-i * 0.7}s; --r:${(i % 2 ? 1 : -1) * (2 + (i % 4))}deg`}>
+          {s.label}
+        </li>
+      ))}
+    </ul>
+    <div class="skills__head">
+      <h2 data-reveal>What I bring to the table</h2>
+      <p data-reveal>Research that finds the real question, strategy that answers it, and design that makes people care.</p>
+      <p class="skills__legend" data-reveal>
+        {Object.values(disciplines).map((d) => (
+          <span style={`--c:${d.color}`}><span class="dot"></span>{d.short}</span>
+        ))}
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills__stage { position: relative; min-height: 520px; display: grid; place-items: center; }
+  .skills__head { text-align: center; max-width: 520px; position: relative; z-index: 1; }
+  h2 { font-size: clamp(2.2rem, 5.4vw, 3.8rem); }
+  .skills__head p { color: var(--muted); margin: 16px auto 0; max-width: 40ch; }
+  .skills__legend { display: flex; justify-content: center; gap: 16px; font-size: 13px; }
+  .skills__legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .skills__pills { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; }
+  .skills__pills li {
+    position: absolute; left: var(--x); top: var(--y);
+    padding: 8px 16px; border-radius: 999px; white-space: nowrap;
+    font-size: 14px; font-weight: 500; color: var(--navy);
+    background: color-mix(in srgb, var(--c) 30%, #fff);
+    rotate: var(--r);
+    animation: bob 6s ease-in-out infinite alternate; animation-delay: var(--d);
+  }
+  @keyframes bob { to { transform: translateY(-10px); } }
+  @media (max-width: 860px) {
+    .skills__stage { min-height: 0; display: flex; flex-direction: column; gap: 32px; }
+    .skills__pills { position: static; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; order: 2; }
+    .skills__pills li { position: static; animation: none; rotate: 0deg; font-size: 13px; }
+  }
+</style>

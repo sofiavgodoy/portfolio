@@ -1,0 +1,30 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import CaseStudy from '../../components/CaseStudy.astro';
+
+export async function getStaticPaths() {
+  const play = (await getCollection('playground', (p) => !p.data.draft)).sort((a, b) => a.data.order - b.data.order);
+  return play.map((entry, i) => {
+    const n = play[(i + 1) % play.length];
+    return { params: { slug: entry.id }, props: { entry, next: { href: `/playground/${n.id}`, title: n.data.title, cover: n.data.cover } } };
+  });
+}
+const { entry, next } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<Base title={d.title} description={d.kicker} image={d.cover}>
+  <CaseStudy
+    back={{ href: '/playground', label: 'Playground' }}
+    kicker={d.kind}
+    title={d.title}
+    summary={d.kicker}
+    meta={[]}
+    cover={d.cover}
+    next={next}
+    journal
+  >
+    <Content />
+  </CaseStudy>
+</Base>

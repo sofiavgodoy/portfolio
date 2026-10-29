@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Marquee from '../components/Marquee.astro';
+import WorkGrid from '../components/WorkGrid.astro';
+import Skills from '../components/Skills.astro';
+import { workedWith } from '../data/site';
+
+const work = (await getCollection('work', (p) => !p.data.draft)).sort((a, b) => a.data.order - b.data.order);
+const featured = work.filter((p) => p.data.featured);
+const play = (await getCollection('playground', (p) => !p.data.draft)).sort((a, b) => a.data.order - b.data.order);
+
+const peek = [
+  ...work.map((p) => ({ src: p.data.cover, href: `/work/${p.id}`, alt: p.data.title })),
+  ...play.map((p) => ({ src: p.data.cover, href: `/playground/${p.id}`, alt: p.data.title })),
+];
+---
+<Base>
+  <Hero />
+
+  <section class="peek">
+    <p class="peek__title" data-reveal>Sneak peek of my work</p>
+    <Marquee items={peek} />
+  </section>
+
+  <section class="section wrap" id="work">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>Selected work</p>
+      <h2 data-reveal>Where strategy meets design</h2>
+      <p data-reveal>Every project has a color. Pink is strategy and marketing, blue is UX and research, purple is brand and visual. Most of my work is a mix.</p>
+    </div>
+    <WorkGrid items={featured} />
+    <p class="more" data-reveal><a class="btn btn--ghost" href="/work">View all work</a></p>
+  </section>
+
+  <Skills />
+
+  <section class="worked wrap">
+    <p class="eyebrow" data-reveal>Where I’ve worked & collaborated</p>
+    <ul data-reveal>
+      {workedWith.map((w) => <li>{w}</li>)}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .peek { padding-top: 20px; }
+  .peek__title {
+    text-align: center; font-family: var(--serif); font-style: italic;
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem); color: var(--navy); margin: 0 0 22px;
+  }
+  .more { text-align: center; margin-top: 40px; }
+  .worked { text-align: center; padding-bottom: 20px; }
+  .worked ul {
+    list-style: none; padding: 0; margin: 22px auto 0; max-width: 900px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 34px;
+  }
+  .worked li { font-family: var(--serif); font-style: italic; font-size: clamp(1.05rem, 2vw, 1.35rem); color: var(--muted); }
+</style>

@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import WorkGrid from '../../components/WorkGrid.astro';
+
+const work = (await getCollection('work', (p) => !p.data.draft)).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Work" description="Marketing strategy, research, and UX/UI design case studies by Sofia Godoy.">
+  <section class="wrap page-head">
+    <p class="eyebrow" data-reveal>Work</p>
+    <h1 data-reveal>Research, strategy & design</h1>
+    <p data-reveal>Marketing and UX are often the same project seen from two sides. Pick a color to see one side, or keep them mixed.</p>
+  </section>
+  <section class="wrap" style="padding-bottom: 40px">
+    <WorkGrid items={work} syncUrl />
+  </section>
+</Base>
+

@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+import Badge from '../components/Badge.astro';
+import { disciplines, experience, involvement, awards, offTheClock, onRepeat } from '../data/site';
+---
+<Base title="About" description="About Sofia Godoy: marketing and digital arts student at the University of Florida.">
+  <section class="wrap about">
+    <div class="about__photo" data-reveal>
+      <Badge size={300} />
+    </div>
+    <div class="about__text">
+      <p class="eyebrow" data-reveal>About me</p>
+      <h1 data-reveal>Hi, I’m Sofia!</h1>
+      <p data-reveal>A Marketing and Digital Arts & Sciences student at the University of Florida who loves blending creativity with strategy to create content people actually want to see.</p>
+      <p data-reveal>I’m the co-founder of UF’s Data Science for Sustainability Club, where I help turn complex data into clear, compelling visuals that support environmental initiatives. I’ve also worked as a Marketing Content Development Intern at Fire Neural Network, designing web pages, shaping brand identity, and creating blogs and newsletters that connect technology with real-world impact.</p>
+      <p data-reveal>Outside of school and work, I run two online resale shops on Depop and eBay with over 1,000 followers — a passion project that’s taught me the ins and outs of product photography, branding, and building trust with an online audience.</p>
+      <p data-reveal>Whether it’s a marketing campaign, a digital art project, or a community initiative, I’m driven by the idea that good design and thoughtful storytelling can make a real difference.</p>
+    </div>
+  </section>
+
+  <section class="wrap section pins-section">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>Pin collection</p>
+      <h2 data-reveal>Clubs & involvement</h2>
+      <p data-reveal>Hover or tap a pin to see what I did there.</p>
+    </div>
+    <ul class="pins">
+      {involvement.map((p, i) => (
+        <li data-reveal style={`--delay:${i * 0.06}s; --c:${disciplines[p.d].color}; --r:${[-8, 5, -3, 9, -6][i % 5]}deg`}>
+          <button type="button" class="pin" aria-describedby={`pin-${i}`}>
+            <span class="pin__face">{p.pin}</span>
+          </button>
+          <span class="pin__tip" id={`pin-${i}`} role="tooltip"><strong>{p.org}</strong>{p.role}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="wrap cols">
+    <div>
+      <p class="eyebrow" data-reveal>Experience</p>
+      <ul class="list">
+        {experience.map((e) => (
+          <li data-reveal><span class="list__main">{e.role}</span><span class="list__sub">{e.org}{e.when && ` · ${e.when}`}</span></li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <p class="eyebrow" data-reveal>Awards</p>
+      <ul class="list">
+        {awards.map((a) => (
+          <li data-reveal><span class="list__main">{a.title}</span><span class="list__sub">{a.where}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap section offclock">
+    <div>
+      <p class="eyebrow" data-reveal>Off the clock</p>
+      <h2 data-reveal>Junk journals, movies & a lot of music</h2>
+      <ul class="tags" data-reveal>{offTheClock.map((t) => <li>{t}</li>)}</ul>
+    </div>
+    <div class="offclock__player" data-reveal>
+      <iframe
+        title={`${onRepeat.title} by ${onRepeat.artist} on Spotify`}
+        src={onRepeat.embed}
+        height="352"
+        loading="lazy"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      ></iframe>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about {
+    display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 80px);
+    align-items: center; padding-top: clamp(48px, 8vw, 100px);
+  }
+  .about__photo { display: grid; place-items: center; }
+  .about h1 { font-size: clamp(2.6rem, 6vw, 4.4rem); margin: 12px 0 20px; }
+  .about__text p:not(.eyebrow) { margin: 0 0 14px; }
+
+  .pins-section { overflow-x: clip; }
+  .pins { list-style: none; padding: 0; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(18px, 4vw, 40px); }
+  .pins li { position: relative; }
+  .pin {
+    width: 112px; aspect-ratio: 1; border-radius: 50%; border: 0; cursor: pointer; padding: 7px;
+    background: linear-gradient(145deg, #fff, #e9e4ec);
+    box-shadow: 0 14px 26px -14px rgb(20 26 77 / 0.5), inset 0 -3px 0 rgb(0 0 0 / 0.06);
+    rotate: var(--r); transition: rotate 0.5s var(--ease), transform 0.5s var(--ease);
+  }
+  .pin__face {
+    display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%;
+    background: radial-gradient(circle at 30% 25%, #fff8, transparent 45%), color-mix(in srgb, var(--c) 70%, #fff);
+    font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--navy);
+    box-shadow: inset 0 0 0 3px rgb(255 255 255 / 0.6);
+  }
+  .pin:hover, .pin:focus-visible { rotate: 0deg; transform: translateY(-6px); }
+  .pin__tip {
+    position: absolute; left: 50%; top: calc(100% + 12px); translate: -50% 6px; width: max-content; max-width: 220px;
+    padding: 10px 14px; border-radius: 12px; background: var(--navy); color: #fff; font-size: 13px; text-align: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s, translate 0.3s var(--ease); z-index: 5;
+  }
+  .pin__tip strong { display: block; font-weight: 600; }
+  .pins li:hover .pin__tip, .pin:focus-visible + .pin__tip { opacity: 1; translate: -50% 0; }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); padding-top: 20px; }
+  .list { list-style: none; padding: 0; margin: 14px 0 0; }
+  .list li { padding: 16px 0; border-bottom: 1px solid var(--line); display: grid; gap: 2px; }
+  .list__main { color: var(--navy); font-weight: 500; }
+  .list__sub { color: var(--muted); font-size: 14px; }
+
+  .offclock { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .offclock h2 { font-size: clamp(2rem, 4.6vw, 3.2rem); margin-top: 12px; }
+  .tags { list-style: none; padding: 0; margin: 22px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .tags li { padding: 7px 14px; border-radius: 999px; background: var(--surface); font-size: 14px; }
+  .offclock__player iframe { width: 100%; border: 0; border-radius: 14px; }
+
+  @media (max-width: 820px) {
+    .about, .cols, .offclock { grid-template-columns: 1fr; }
+    .about__photo :global(.badge) { --size: 240px !important; }
+    .pin { width: 92px; }
+  }
+</style>
