@@ -24,6 +24,7 @@
   --mix: linear-gradient(120deg, var(--pink), var(--lilac) 55%, var(--blue));
 
   --serif: 'Libre Baskerville', Georgia, serif;
+  --hand: 'Caveat', 'Segoe Print', cursive;
   --sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --radius: 22px;
@@ -122,6 +123,19 @@ p { text-wrap: pretty; }
   display: inline-block; width: 10px; height: 10px; border-radius: 50%;
   background: var(--c, var(--mix));
   box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.06);
+}
+
+/* ---------- Washi tape (junk-journal pieces) ---------- */
+.tape {
+  position: absolute; z-index: 2; width: 92px; height: 26px; left: 50%; top: -12px;
+  translate: -50% 0; rotate: var(--tr, -4deg);
+  background:
+    repeating-linear-gradient(45deg, rgb(255 255 255 / 0.35) 0 6px, transparent 6px 12px),
+    color-mix(in srgb, var(--tc, var(--pink)) 55%, transparent);
+  -webkit-mask: linear-gradient(90deg, transparent 0 3px, #000 3px calc(100% - 3px), transparent 0),
+    repeating-linear-gradient(transparent 0 3px, #000 3px 6px);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  pointer-events: none;
 }
 
 /* ---------- Page headers ---------- */

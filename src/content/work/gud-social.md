@@ -7,6 +7,21 @@ summary: "Templates, collab posts, and analytics-driven content for UF's user de
 featured: false
 order: 7
 cover: "/images/social-media/cover.webp"
+lenses:
+  strategist:
+    - label: "Role"
+      text: "Social Media Director for UF's UX/UI club for one semester."
+    - label: "Growth"
+      text: "Used Instagram and LinkedIn analytics, keywords for SEO, and grids for GEO to improve outreach."
+    - label: "Partnerships"
+      text: "Collaboration posts with other UF organizations for events."
+  designer:
+    - label: "System"
+      text: "Reusable post templates built on design principles."
+    - label: "Process"
+      text: "Made several variations of each design (like the “Sock Tember” drive), gathered stakeholder feedback, and refined."
+    - label: "Tools"
+      text: "Instagram and LinkedIn analytics, plus the design work shown below."
 ---
 
 For the UX/UI organization at the University of Florida I was the Social Media director for one semester. I used Design Principles, created templates, and worked with other organizations at the university to do collaboration posts for events.

@@ -7,6 +7,25 @@ summary: "Researched 35 years of Halloween Horror Nights imagery and kept creati
 featured: true
 order: 2
 cover: "/images/universal/cover.webp"
+lenses:
+  strategist:
+    - label: "Context"
+      text: "Marketing and Sales (Brimworks, now Global Brand and Commercial), working in a library of 8M+ assets."
+    - label: "HHN 35th anniversary"
+      text: "Found archived imagery from every year of Halloween Horror Nights since 1991 for an anniversary news segment."
+    - label: "Global requests"
+      text: "Sourced assets for teams across Islands of Adventure, Epic Universe, and Universal Japan."
+    - label: "Takeaway"
+      text: "Creative storytelling depends on the systems behind it: clear information, careful research, reliable handoffs."
+  designer:
+    - label: "The challenge"
+      text: "Translate creative requests into search terms that work across several Digital Asset Management systems."
+    - label: "Process"
+      text: "Research → search → review usage information → route files into a branded portal for feedback."
+    - label: "Metadata"
+      text: "Cleaned and categorized metadata in Excel with VLOOKUP, edited scripts to extract it, and uploaded the updated files."
+    - label: "Tools"
+      text: "DAM systems, Excel, and scripts."
 ---
 
 During my time at Universal Destinations and Experiences, I worked under the old team name of Brimworks in the Marketing and Sales Department, which now is called Global Brand and Commercial team.

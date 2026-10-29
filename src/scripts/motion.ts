@@ -102,10 +102,24 @@ function lightbox() {
   dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
 }
 
+// Remember the reader's lens across case studies.
+function lens() {
+  const inputs = document.querySelectorAll<HTMLInputElement>('input[name="lens"]');
+  if (!inputs.length) return;
+  try {
+    const saved = localStorage.getItem('lens');
+    inputs.forEach((i) => { if (i.value === saved) i.checked = true; });
+  } catch {}
+  inputs.forEach((i) => i.addEventListener('change', () => {
+    try { localStorage.setItem('lens', i.value); } catch {}
+  }));
+}
+
 export function initMotion() {
   reveal();
   navShadow();
   paint();
   filters();
   lightbox();
+  lens();
 }

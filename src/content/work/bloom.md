@@ -7,6 +7,25 @@ summary: "A 24-hour prototype that connects students with cleanups, climate even
 featured: true
 order: 5
 cover: "/images/bloom/cover.webp"
+lenses:
+  strategist:
+    - label: "The brief"
+      text: "Design a platform that serves a community purpose or unites students on campus."
+    - label: "Research"
+      text: "Asked Gainesville students what they wished was available on campus."
+    - label: "The idea"
+      text: "Make getting involved in cleanups, climate events, and political action easy and personal."
+    - label: "Result"
+      text: "Runner-up for Best Design, judged by professionals from Google, Adobe, and Figma."
+  designer:
+    - label: "The challenge"
+      text: "Design several complete pages in a 24-hour sprint."
+    - label: "Process"
+      text: "Mood board and planning in FigJam → split the pages with my partner → prototype → present."
+    - label: "Tools"
+      text: "Figma and FigJam."
+    - label: "Deliverable"
+      text: "A clickable prototype and final page designs."
 ---
 
 For a Design-A-thon in the University of Florida’s User Design Club, we were tasked to create an online platform that supported a community purpose or united students on campus. So me and my partner created a website prototype that was made to connect people with their community through nearby cleanups, climate events, and political action, so getting involved feels easy and personal

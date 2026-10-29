@@ -7,6 +7,23 @@ summary: "Audience research and brand strategy to bring Gen Z moviegoers and eme
 featured: true
 order: 4
 cover: "/images/vero-beach-film-festival/cover.webp"
+lenses:
+  strategist:
+    - label: "The problem"
+      text: "Grow the festival's audience and attract Gen Z."
+    - label: "Research"
+      text: "Brand positioning, local demographics, competing festivals, and Gen Z engagement trends."
+    - label: "Insight"
+      text: "Personal access to filmmakers and the coastal setting set the festival apart."
+    - label: "Recommendations"
+      text: "Accessible tickets, college partnerships, filmmaker programming, participatory social content, and ways to measure it."
+  designer:
+    - label: "The challenge"
+      text: "Clarify how two brands fit together: Film Vero year-round and the festival as its flagship event."
+    - label: "Process"
+      text: "Brand analysis → audience research → strategy report."
+    - label: "Deliverable"
+      text: "A research report connecting audience insights to marketing initiatives (embedded below)."
 ---
 
 Problem: Vero Beach Film Festival needed to expand their audience and wanted to attract Gen Z

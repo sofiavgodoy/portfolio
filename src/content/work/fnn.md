@@ -7,6 +7,25 @@ summary: "Redesigned FNN's website after a rebrand so it speaks to utility compa
 featured: true
 order: 1
 cover: "/images/fnn/cover.webp"
+lenses:
+  strategist:
+    - label: "The problem"
+      text: "The old site only spoke to wildfire prevention agencies. After a rebrand, FNN needed to reach utility companies with its new outage-prevention features."
+    - label: "Research"
+      text: "Reviewed the existing pages, ran a quick competitive analysis, and walked the customer journey with FNN's executive team."
+    - label: "Audience"
+      text: "Narrowed to two personas: mid-age wildfire and utility professionals, many of whom find small text hard to read."
+    - label: "Result"
+      text: "A redesigned, live website, shipped in two months."
+  designer:
+    - label: "The challenge"
+      text: "Give a newly rebranded tech company a modern site that still works for an older audience."
+    - label: "Process"
+      text: "Mood board → wireframes and journeys → Figma design → user testing with about 25 people → iteration → launch with the developer."
+    - label: "Design choices"
+      text: "A Tesla-inspired video hero, larger-than-average type, hover animations, and an interactive header."
+    - label: "Team"
+      text: "Two designers, including me, plus the on-site developer."
 ---
 
 I worked with Fire Neural Network and designed their new website following a rebrand. They wanted to capture a more modern look, attracting new customers. I drafted, researched, and learned many rules of design and worked with the development team to publish this site live, connected to back-end data bases and servers.

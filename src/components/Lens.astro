@@ -1,0 +1,91 @@
+---
+// "Read as a strategist / designer" switch at the top of a case study.
+// Radio inputs make it work without JavaScript; motion.ts only remembers the choice.
+interface Item { label: string; text: string }
+interface Props { strategist: Item[]; designer: Item[] }
+const { strategist, designer } = Astro.props;
+const panels = [
+  { key: 'strategist', title: 'As a strategist', color: 'var(--pink)', ink: 'var(--pink-ink)', items: strategist,
+    note: 'Text first, visuals compact. Switch to the designer view to see the work large.' },
+  { key: 'designer', title: 'As a designer', color: 'var(--blue)', ink: 'var(--blue-ink)', items: designer,
+    note: 'Visuals large. Switch to the strategist view for the business story.' },
+];
+---
+<section class="lens wrap" data-reveal>
+  <div class="lens__bar">
+    <p class="lens__q">How do you want to read this?</p>
+    <div class="lens__toggle" role="radiogroup" aria-label="Reading lens">
+      {panels.map((p, i) => (
+        <>
+          <input type="radio" name="lens" id={`lens-${p.key}`} value={p.key} checked={i === 0} />
+          <label for={`lens-${p.key}`} style={`--c:${p.color}`}><span class="dot"></span>{p.title}</label>
+        </>
+      ))}
+      <span class="lens__thumb" aria-hidden="true"></span>
+    </div>
+  </div>
+  <div class="lens__panels">
+    {panels.map((p) => (
+      <div class={`lens__panel lens__panel--${p.key}`} style={`--c:${p.color}; --tone:${p.ink}`}>
+        <ol>
+          {p.items.map((it) => (
+            <li><span class="lens__label">{it.label}</span><p>{it.text}</p></li>
+          ))}
+        </ol>
+        <p class="lens__note">{p.note}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .lens { padding-top: clamp(36px, 6vw, 64px); }
+  .lens__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 18px; }
+  .lens__q { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(1.25rem, 2.4vw, 1.6rem); color: var(--navy); }
+
+  .lens__toggle {
+    position: relative; display: grid; grid-template-columns: 1fr 1fr;
+    padding: 4px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .lens__toggle input { position: absolute; opacity: 0; pointer-events: none; }
+  .lens__toggle label {
+    position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 9px 16px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+    font-size: 14px; font-weight: 500; color: var(--muted); transition: color 0.3s;
+  }
+  .lens__toggle input:checked + label { color: var(--navy); }
+  .lens__toggle input:focus-visible + label { outline: 2px solid var(--lilac-ink); outline-offset: 2px; }
+  .lens__thumb {
+    position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: 999px;
+    background: color-mix(in srgb, var(--pink) 28%, #fff);
+    transition: translate 0.45s var(--ease), background 0.45s;
+  }
+  .lens__toggle:has(#lens-designer:checked) .lens__thumb { translate: 100% 0; background: color-mix(in srgb, var(--blue) 32%, #fff); }
+
+  .lens__panels { display: grid; }
+  .lens__panel {
+    grid-area: 1 / 1; padding: clamp(20px, 3vw, 32px); border-radius: var(--radius);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--c) 16%, #fff), #fff 70%);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 35%, transparent);
+    opacity: 0; visibility: hidden; translate: 0 8px;
+    transition: opacity 0.45s var(--ease), translate 0.45s var(--ease), visibility 0.45s;
+  }
+  .lens:has(#lens-strategist:checked) .lens__panel--strategist,
+  .lens:has(#lens-designer:checked) .lens__panel--designer { opacity: 1; visibility: visible; translate: 0 0; }
+
+  .lens ol {
+    list-style: none; margin: 0; padding: 0; counter-reset: n;
+    display: grid; gap: 20px 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  }
+  .lens li { counter-increment: n; }
+  .lens__label { display: flex; align-items: baseline; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+  .lens__label::before { content: '0' counter(n); font-family: var(--serif); font-style: italic; font-size: 15px; letter-spacing: 0; color: var(--ink); opacity: 0.7; }
+  .lens li p { margin: 6px 0 0; font-size: 15px; line-height: 1.55; color: var(--ink); }
+  .lens__panel .lens__label, .lens__panel .lens__label::before { color: var(--tone); }
+  .lens__note { margin: 22px 0 0; font-size: 13px; color: var(--muted); }
+
+  /* The lens also reshapes the story below: strategists get compact visuals, designers get them big. */
+  :global(.cs:has(#lens-strategist:checked) .prose .gallery) { grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); }
+  :global(.cs:has(#lens-strategist:checked) .prose > p:has(> img)) { width: min(720px, 100vw - 2 * var(--gutter)); }
+  :global(.cs:has(#lens-designer:checked) .prose .gallery) { grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); }
+</style>

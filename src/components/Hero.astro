@@ -36,7 +36,19 @@ const cards = [
       <path id="arc" d="M20,52 Q150,8 280,52" fill="none" />
       <text><textPath href="#arc" startOffset="50%" text-anchor="middle">Welcome to my world</textPath></text>
     </svg>
-    <h1>{site.name}</h1>
+    <h1>
+      <svg class="stroke" viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="brush" x1="0" x2="1">
+            <stop offset="0" stop-color="var(--pink)" />
+            <stop offset="0.55" stop-color="var(--lilac)" />
+            <stop offset="1" stop-color="var(--blue)" />
+          </linearGradient>
+        </defs>
+        <path pathLength="1" d="M18 82 C 120 58, 210 96, 310 74 S 500 52, 584 70" />
+      </svg>
+      <span>{site.name}</span>
+    </h1>
     <p class="hero__role">{site.role}</p>
 
     <div class="mix" role="group" aria-label="What I do">
@@ -105,7 +117,18 @@ const cards = [
   .hero__content { text-align: center; position: relative; z-index: 2; }
   .arc { width: 230px; margin: 0 auto -6px; overflow: visible; }
   .arc text { font-family: var(--sans); font-size: 17px; fill: var(--ink); }
-  h1 { font-size: clamp(3.2rem, 10vw, 7.4rem); line-height: 1; padding-inline: 0.05em; }
+  h1 { font-size: clamp(3.2rem, 10vw, 7.4rem); line-height: 1; padding-inline: 0.05em; position: relative; }
+  h1 span { position: relative; }
+
+  /* A brush stroke of the three paints, swept in behind the name */
+  .stroke { position: absolute; left: -4%; width: 108%; top: 18%; height: 80%; overflow: visible; }
+  .stroke path {
+    fill: none; stroke: url(#brush); stroke-width: 34; stroke-linecap: round;
+    opacity: 0.45; mix-blend-mode: multiply;
+    stroke-dasharray: 1; stroke-dashoffset: 1;
+    animation: brush 1.6s var(--ease) 0.35s forwards;
+  }
+  @keyframes brush { to { stroke-dashoffset: 0; } }
   .hero__role { margin: 18px 0 0; font-size: clamp(16px, 2vw, 19px); color: var(--ink); }
 
   .mix { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: 30px; }

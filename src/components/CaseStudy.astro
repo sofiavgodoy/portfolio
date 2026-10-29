@@ -1,5 +1,6 @@
 ---
 import Swatches from './Swatches.astro';
+import Lens from './Lens.astro';
 import type { Discipline } from '../data/site';
 interface Props {
   back: { href: string; label: string };
@@ -10,10 +11,12 @@ interface Props {
   meta: { label: string; value: string }[];
   cover: string;
   next?: { href: string; title: string; cover: string };
+  lenses?: { strategist: { label: string; text: string }[]; designer: { label: string; text: string }[] };
+  journal?: boolean;
 }
-const { back, kicker, title, summary, list = [], meta, cover, next } = Astro.props;
+const { back, kicker, title, summary, list = [], meta, cover, next, lenses, journal = false } = Astro.props;
 ---
-<article class="cs">
+<article class:list={['cs', { 'cs--journal': journal }]}>
   <header class="cs__head wrap">
     <a class="cs__back" href={back.href}>← {back.label}</a>
     <p class="eyebrow" data-reveal>{kicker}</p>
@@ -29,8 +32,10 @@ const { back, kicker, title, summary, list = [], meta, cover, next } = Astro.pro
     </dl>
   </header>
   <div class="cs__cover wrap" data-reveal>
+    {journal && <span class="tape" style="--tc: var(--lilac)"></span>}
     <img src={cover} alt="" />
   </div>
+  {lenses && <Lens {...lenses} />}
   <div class="prose wrap">
     <slot />
   </div>
@@ -61,6 +66,14 @@ const { back, kicker, title, summary, list = [], meta, cover, next } = Astro.pro
     width: 100%; max-height: 640px; object-fit: cover; border-radius: var(--radius);
     background: var(--surface);
   }
+  .cs__cover { position: relative; }
+  /* Playground pieces get taped into the page like a polaroid */
+  .cs--journal .cs__cover { width: min(760px, 100% - 2 * var(--gutter)); }
+  .cs--journal .cs__cover img {
+    border-radius: 4px; padding: 12px 12px 40px; background: #fff; rotate: -1deg;
+    box-shadow: 0 24px 50px -30px rgb(20 26 77 / 0.45);
+  }
+  .cs--journal .cs__cover .tape { width: 120px; height: 30px; top: -10px; }
   .prose { padding-block: clamp(40px, 7vw, 80px) 20px; }
   .cs__next { text-align: center; padding-top: 60px; }
   .cs__next a {

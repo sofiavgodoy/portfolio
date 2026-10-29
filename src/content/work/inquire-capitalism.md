@@ -7,6 +7,25 @@ summary: "Mapped how people search for Gainesville's business history and turned
 featured: true
 order: 3
 cover: "/images/the-agency/cover.webp"
+lenses:
+  strategist:
+    - label: "Client"
+      text: "Inquire Capitalism's Gainesville Business History project at UF."
+    - label: "Research"
+      text: "Reviewed 4+ related sites (local history, tourism, government, university) and 8 search terms."
+    - label: "Insight"
+      text: "Searches led to general local history or visitor info, so business history wasn't visible as a topic of its own."
+    - label: "Recommendation"
+      text: "Clearer page titles, headings, metadata, content hierarchy, and navigation."
+  designer:
+    - label: "The challenge"
+      text: "Help visitors understand what a database or oral-history section offers before they click."
+    - label: "Focus"
+      text: "Information architecture and clear, descriptive labels."
+    - label: "Process"
+      text: "Search-landscape review → content analysis → recommendations."
+    - label: "Deliverable"
+      text: "A research and strategy report for the client."
 ---
 
 ### Helping Gainesville’s business history get discovered

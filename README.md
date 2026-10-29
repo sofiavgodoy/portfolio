@@ -19,6 +19,16 @@ The homepage hero is a soft “paint field” where these colors drift and follo
 Hovering *Strategy* or *Design* pulls that color forward. The Work page uses the same colors
 as filters instead of separate Marketing and UX tabs, so hybrid projects never have to pick a side.
 
+### Other signature features
+
+- **Read as a strategist / designer:** every case study opens with a switch. The strategist view
+  shows the problem, insight, and results, with visuals kept compact. The designer view shows the
+  challenge, process, and tools, with visuals shown large. The choice is remembered across projects.
+  Edit the text in each project's `lenses:` front matter.
+- **Junk-journal Playground:** creative work is taped into a scrapbook page with washi tape,
+  polaroids, ticket-stub labels, sticky notes, and stickers.
+- **Brush stroke:** the three paint colors sweep in behind the name on load.
+
 ## Run it locally
 
 ```bash
@@ -50,6 +60,13 @@ cover: "/images/bloom/cover.webp"
 featured: true                   # show on the homepage
 order: 5                         # sort order
 draft: false                     # true hides the page
+lenses:                          # optional "read as" switch (work only)
+  strategist:
+    - label: "The brief"
+      text: "What the client needed."
+  designer:
+    - label: "Process"
+      text: "How I got there."
 ---
 ```
 

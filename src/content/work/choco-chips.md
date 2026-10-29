@@ -7,6 +7,19 @@ summary: "Two resale shops grown to 1,000+ followers through product photography
 featured: false
 order: 8
 cover: "/images/online-businesses/cover.webp"
+lenses:
+  strategist:
+    - label: "The business"
+      text: "Thrifting and reselling on Depop and eBay."
+    - label: "Growth"
+      text: "A 1,000-person audience and a few thousand dollars in profit on Depop; $1,000 on eBay from August to September 2023."
+    - label: "Skills"
+      text: "Pricing, advertising, audience targeting, inventory, customer service, and fulfillment."
+  designer:
+    - label: "Visuals"
+      text: "Product photography and branding that build trust with an online audience."
+    - label: "Categories"
+      text: "Organizing listings by product category so buyers can find things."
 ---
 
 ### Depop Business choco_chips
