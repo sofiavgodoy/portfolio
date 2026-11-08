@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 import Badge from './Badge.astro';
 import { site, onRepeat } from '../data/site';
 
@@ -19,8 +20,8 @@ const cards = [
 
   <div class="cards" aria-hidden="true">
     {cards.map((c) => (
-      <a href={c.href} class={`card ${c.cls}`} tabindex="-1">
-        <img src={c.src} alt={c.alt} loading="eager" />
+      <a href={u(c.href)} class={`card ${c.cls}`} tabindex="-1">
+        <img src={u(c.src)} alt={c.alt} loading="eager" />
       </a>
     ))}
     <Badge class="hero__badge" size={170} />
@@ -52,27 +53,27 @@ const cards = [
     <p class="hero__role">{site.role}</p>
 
     <div class="mix" role="group" aria-label="What I do">
-      <a href="/work?filter=strategy" class="chip" data-pull="pink" style="--c: var(--pink)">
+      <a href={u('/work?filter=strategy')} class="chip" data-pull="pink" style="--c: var(--pink)">
         <span class="dot"></span>Strategy
       </a>
       <span class="mix__op" aria-hidden="true">+</span>
-      <a href="/work?filter=ux" class="chip" data-pull="blue" style="--c: var(--blue)">
+      <a href={u('/work?filter=ux')} class="chip" data-pull="blue" style="--c: var(--blue)">
         <span class="dot"></span>Design
       </a>
       <span class="mix__result">
         <span class="mix__op" aria-hidden="true">=</span>
-        <a href="/work" class="chip chip--mix" data-pull="lilac">
+        <a href={u('/work')} class="chip chip--mix" data-pull="lilac">
           <span class="dot"></span>the full picture
         </a>
       </span>
     </div>
 
     <div class="hero__cta">
-      <a href="/work" class="btn btn--primary">
+      <a href={u('/work')} class="btn btn--primary">
         See my work
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
       </a>
-      <a href="/about" class="btn btn--ghost">About me</a>
+      <a href={u('/about')} class="btn btn--ghost">About me</a>
     </div>
   </div>
 </section>

@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 import Swatches from './Swatches.astro';
 import { disciplines, type Discipline } from '../data/site';
 interface Props {
@@ -16,9 +17,9 @@ const colors = list.map((d) => disciplines[d].color);
 const wash = colors.length > 1 ? `linear-gradient(135deg, ${colors.join(', ')})` : colors[0] ?? 'var(--mix)';
 ---
 <article class="pcard" data-disciplines={list.join(' ')} data-reveal style={`--wash:${wash}; --delay:${delay}s`}>
-  <a href={href}>
+  <a href={u(href)}>
     <div class="pcard__media">
-      <img src={cover} alt="" loading="lazy" decoding="async" />
+      <img src={u(cover)} alt="" loading="lazy" decoding="async" />
     </div>
     <div class="pcard__body">
       <p class="pcard__kicker">{list.length > 0 && <Swatches list={list} />}<span>{kicker}</span></p>

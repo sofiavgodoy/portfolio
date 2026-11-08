@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
@@ -31,7 +32,7 @@ const peek = [
       <p data-reveal>Every project has a color. Pink is strategy and marketing, blue is UX and research, purple is brand and visual. Most of my work is a mix.</p>
     </div>
     <WorkGrid items={featured} />
-    <p class="more" data-reveal><a class="btn btn--ghost" href="/work">View all work</a></p>
+    <p class="more" data-reveal><a class="btn btn--ghost" href={u('/work')}>View all work</a></p>
   </section>
 
   <Skills />

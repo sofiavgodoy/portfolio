@@ -82,11 +82,20 @@ To show several images side by side, wrap them in a gallery:
 </div>
 ```
 
-## Deploying
+## Deploying (GitHub Pages)
 
-Connect this repo to [Vercel](https://vercel.com) or [Netlify](https://netlify.com)
-(both free). They detect Astro automatically: build command `npm run build`, output `dist`.
-Then add the custom domain and update `site` in `astro.config.mjs`.
+The site is live at **https://sofiavgodoy.github.io/portfolio/**.
+
+Every push to `main` runs `.github/workflows/deploy.yml`, which builds the site and
+publishes it to GitHub Pages. It takes about 1–2 minutes; watch it in the repo's **Actions** tab.
+
+One-time setup (already done once): repo **Settings → Pages → Build and deployment →
+Source: GitHub Actions**.
+
+Paths: the site lives under `/portfolio/`, so wrap root-relative links and images in code
+with `u()` from `src/lib/url.ts`. Markdown content can keep using `/images/...`; it is
+prefixed automatically. With a custom domain, change `site` and set `base` to `'/'` in
+`astro.config.mjs`.
 
 ## Docs
 

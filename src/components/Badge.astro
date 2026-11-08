@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 // Headshot with text circling around it (carried over from the Framer site).
 import { site } from '../data/site';
 interface Props { size?: number; class?: string }
@@ -6,7 +7,7 @@ const { size = 170, class: cls } = Astro.props;
 const id = `badge-${Math.random().toString(36).slice(2, 8)}`;
 ---
 <div class:list={['badge', cls]} style={`--size:${size}px`}>
-  <img src="/images/about/01.webp" alt="Portrait of Sofia Godoy" width={size} height={size} />
+  <img src={u('/images/about/01.webp')} alt="Portrait of Sofia Godoy" width={size} height={size} />
   <svg viewBox="0 0 200 200" aria-hidden="true">
     <defs><path id={id} d="M100,100 m-84,0 a84,84 0 1,1 168,0 a84,84 0 1,1 -168,0" /></defs>
     <text><textPath href={`#${id}`} textLength="524" lengthAdjust="spacing">{site.badge}</textPath></text>

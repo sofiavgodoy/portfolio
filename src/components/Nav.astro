@@ -1,13 +1,14 @@
 ---
-const path = Astro.url.pathname;
+import { u, stripBase } from '../lib/url';
+const path = stripBase(Astro.url.pathname);
 const is = (p: string) => (p === '/' ? path === '/' : path.startsWith(p));
 ---
 <header class="nav">
   <nav class="nav__inner" aria-label="Main">
-    <a href="/work" class:list={['nav__link', { active: is('/work') }]}>Work</a>
-    <a href="/about" class:list={['nav__link', { active: is('/about') }]}>About</a>
-    <a href="/" class="nav__name" aria-label="Sofia Godoy, home">Sofia Godoy</a>
-    <a href="/playground" class:list={['nav__link', { active: is('/playground') }]}>Playground</a>
+    <a href={u('/work')} class:list={['nav__link', { active: is('/work') }]}>Work</a>
+    <a href={u('/about')} class:list={['nav__link', { active: is('/about') }]}>About</a>
+    <a href={u('/')} class="nav__name" aria-label="Sofia Godoy, home">Sofia Godoy</a>
+    <a href={u('/playground')} class:list={['nav__link', { active: is('/playground') }]}>Playground</a>
     <a href="#contact" class="nav__link">Contact</a>
   </nav>
 </header>

@@ -1,4 +1,5 @@
 ---
+import { u } from '../../lib/url';
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 
@@ -49,9 +50,9 @@ const notes: Record<number, { text: string; c: string }> = {
               data-reveal
               style={`--delay:${(i % 3) * 0.06}s; --r:${tilts[i % tilts.length]}deg; --tc:${tapes[i % tapes.length]}; --tr:${i % 2 ? 5 : -4}deg`}
             >
-              <a href={`/playground/${p.id}`}>
+              <a href={u(`/playground/${p.id}`)}>
                 <span class="tape"></span>
-                <img src={p.data.cover} alt="" loading="lazy" decoding="async" />
+                <img src={u(p.data.cover)} alt="" loading="lazy" decoding="async" />
                 <span class="piece__title">{p.data.title}</span>
                 <span class="ticket">{p.data.kind}</span>
               </a>

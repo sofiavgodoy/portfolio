@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 interface Props { items: { src: string; href: string; alt: string }[] }
 const { items } = Astro.props;
 ---
@@ -6,8 +7,8 @@ const { items } = Astro.props;
   <ul class="marquee__track">
     {[...items, ...items].map((it, i) => (
       <li aria-hidden={i >= items.length ? 'true' : undefined}>
-        <a href={it.href} tabindex={i >= items.length ? -1 : undefined}>
-          <img src={it.src} alt={i >= items.length ? '' : it.alt} loading="lazy" decoding="async" />
+        <a href={u(it.href)} tabindex={i >= items.length ? -1 : undefined}>
+          <img src={u(it.src)} alt={i >= items.length ? '' : it.alt} loading="lazy" decoding="async" />
         </a>
       </li>
     ))}
